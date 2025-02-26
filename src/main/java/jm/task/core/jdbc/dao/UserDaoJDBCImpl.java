@@ -17,16 +17,15 @@ public class UserDaoJDBCImpl implements UserDao {
 
         try (Connection connection = Util.getCon()) {
             DatabaseMetaData dbm = connection.getMetaData();
-            ResultSet tables = dbm.getTables(null, "new_schema1",
-                    "Users_Table", null);
+            ResultSet tables = dbm.getTables(
+                    null, "new_schema1", "Users_Table", null);
             if (tables.next()) {
                 System.out.println("Таблица уже существует");
 
             } else {
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(
-                        "CREATE TABLE Users_Table (ID BIGINT, NAME TEXT, LAST_NAME TEXT, AGE SMALLINT)"
-                );
+                        "CREATE TABLE Users_Table (ID BIGINT, NAME TEXT, LAST_NAME TEXT, AGE SMALLINT)");
                 System.out.println("Таблица создана");
             }
 
@@ -65,7 +64,7 @@ public class UserDaoJDBCImpl implements UserDao {
             long id = rs.next() ? rs.getLong(1) : 0;
             String sql = "INSERT INTO Users_Table (ID, NAME, LAST_NAME, AGE) VALUES (?, ?, ?, ?)";
             PreparedStatement prepState = connection.prepareStatement(sql);
-            prepState.setLong(1, id+1);
+            prepState.setLong(1, id + 1);
             prepState.setString(2, name);
             prepState.setString(3, lastName);
             prepState.setByte(4, age);
@@ -102,11 +101,11 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setId(resultSet.getLong(1));
                 users.add(user);
             }
-            if (users.isEmpty()){
+            if (users.isEmpty()) {
                 System.out.println("Пользователи отсутствуют");
             } else {
                 for (int i = 0; i < users.size(); i++)
-                System.out.println(users.get(i).toString());
+                    System.out.println(users.get(i).toString());
             }
         } catch (SQLException e) {
             System.out.println("Ошибка при работе с базой данных: ");

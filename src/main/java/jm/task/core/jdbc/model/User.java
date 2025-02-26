@@ -1,12 +1,12 @@
 package jm.task.core.jdbc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table
+@Entity
+@Table(name = "users_table")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -61,7 +61,7 @@ public class User {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return ("Пользователя номер ".concat(String.valueOf(this.id)).concat(" зовут ").
                 concat(this.name).concat(" ").concat(this.lastName).
                 concat(", его возраст: ").concat(String.valueOf(this.age)));
