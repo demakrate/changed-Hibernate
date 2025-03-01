@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class UserServiceImpl implements UserService {
-    UserDaoHibernateImpl usHib = new UserDaoHibernateImpl(Util.getSessionFactory());
+    private final UserDaoHibernateImpl usHib = new UserDaoHibernateImpl(Util.getSessionFactory());
 
     public void setSession(SessionFactory sessionFactory) {
         usHib.setSession(sessionFactory);
