@@ -1,43 +1,47 @@
 package jm.task.core.jdbc.service;
 
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
+import jm.task.core.jdbc.util.Util;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 
 public class UserServiceImpl implements UserService {
-    UserDaoJDBCImpl us = new UserDaoJDBCImpl();
-    UserDaoHibernateImpl usHib = new UserDaoHibernateImpl();
+    UserDaoHibernateImpl usHib = new UserDaoHibernateImpl(Util.getSessionFactory());
 
+    public void setSession(SessionFactory sessionFactory) {
+        usHib.setSession(sessionFactory);
+    }
+
+    @Override
     public void createUsersTable() {
         usHib.createUsersTable();
-        //us.createUsersTable();
     }
 
+    @Override
     public void dropUsersTable() {
         usHib.dropUsersTable();
-        //us.dropUsersTable();
     }
 
+    @Override
     public void saveUser(String name, String lastName, byte age) {
-        //us.saveUser(name, lastName, age);
         usHib.saveUser(name, lastName, age);
     }
 
+    @Override
     public void removeUserById(long id) {
         usHib.removeUserById(id);
-        //us.removeUserById(id);
     }
 
+    @Override
     public List<User> getAllUsers() {
         return (usHib.getAllUsers());
-        //return (us.getAllUsers());
     }
 
+    @Override
     public void cleanUsersTable() {
         usHib.cleanUsersTable();
-        //us.cleanUsersTable();
     }
 }

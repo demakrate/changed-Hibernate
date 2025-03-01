@@ -1,10 +1,13 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.service.UserServiceImpl;
+import jm.task.core.jdbc.util.Util;
+
+
 public class Main {
-    private static UserDaoJDBCImpl workWithUsers = new UserDaoJDBCImpl();
+
     private static UserServiceImpl tableWork = new UserServiceImpl();
+
     public static void main(String[] args) {
         tableWork.createUsersTable();
         tableWork.saveUser("Dmitry", "Polyakov", (byte) 21);
@@ -14,5 +17,6 @@ public class Main {
         tableWork.getAllUsers();
         tableWork.cleanUsersTable();
         tableWork.dropUsersTable();
+        Util.closeConnection();
     }
 }

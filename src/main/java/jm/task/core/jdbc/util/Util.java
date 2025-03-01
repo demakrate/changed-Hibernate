@@ -1,26 +1,30 @@
 package jm.task.core.jdbc.util;
 
 import jm.task.core.jdbc.model.User;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import java.util.*;
-import java.sql.*;
 
 
-public class Util implements AutoCloseable {
+public class Util {
     private static String url = "jdbc:mysql://localhost:3306/new_schema1";
     private static String user = "root";
     private static String password = "fGhr34kjdv.3f?";
     private static Logger logger = Logger.getLogger("org.hibernate");
 
     private static Connection con;
-    private static Session session;
+    private static SessionFactory sessionFactory;
+
+    private Util() {
+    }
 
     public static Connection getCon() throws SQLException {
         con = DriverManager.getConnection(url, user, password);
@@ -28,14 +32,12 @@ public class Util implements AutoCloseable {
 
     }
 
-    public void close() throws SQLException {
-        con.close();
-        session.close();
+    public static void closeConnection() {
+        sessionFactory.close();
     }
 
-    public static Session getSession() {
+    public static SessionFactory getSessionFactory() {
         logger.setLevel(Level.OFF);
-        SessionFactory sessionFactory;
         Properties prop = new Properties();
         Configuration configuration = new Configuration();
 
@@ -50,8 +52,7 @@ public class Util implements AutoCloseable {
                 .applySettings(configuration.getProperties()).build();
 
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        session = sessionFactory.openSession();
-        return (session);
+        return (sessionFactory);
     }
 
 
