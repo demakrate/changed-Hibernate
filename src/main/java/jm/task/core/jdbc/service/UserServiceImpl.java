@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.service;
 
+import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.util.Util;
@@ -9,10 +10,10 @@ import java.util.List;
 
 
 public class UserServiceImpl implements UserService {
-    private final UserDaoHibernateImpl usHib = new UserDaoHibernateImpl(Util.getSessionFactory());
+    private final UserDao usHib = new UserDaoHibernateImpl();
 
-    public void setSession(SessionFactory sessionFactory) {
-        usHib.setSession(sessionFactory);
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        usHib.setSessionFactory(sessionFactory);
     }
 
     @Override
